@@ -1,0 +1,10 @@
+<div class="item-panel pane" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://java.sun.com/jsf/html">
+    <div class="item-title-wrapper">
+        <h2><h:commandLink styleClass="service title" action="#{dishController.selectDish(dish.id)}">#{dish.title}</h:commandLink>
+        </h2>
+    </div>
+    <br />
+    <h:form>
+        <p:commandButton value="Show recipes" styleClass="service" ajax="false" action="#{dishController.selectDish(dish.id)}" />
+    </h:form>
+</div>

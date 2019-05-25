@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputStylesheet library="css" name="main.css"  />
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <title>Document</title>
+</h:head>
+<body>
+<ui:include src="WEB-INF/templates/header.xhtml" />
+<div class="wrapper">
+    <div class="pane-wrapper">
+        <ui:include src="WEB-INF/templates/left-menu.xhtml" />
+        <div class="content-panel">
+            <div class="pane">
+                <h2 class="title service">Resipes for #{dishBean.dish.title}</h2>
+            </div>
+            <div class="item-panel pane">
+                <div class="item-info">
+                    <div class="item-info-wrapper">
+                        <h2><a href="#" class="title service">AAAaaA</a></h2>
+                    </div>
+                    <p class="service">Complexity: 10</p>
+                </div>
+                <p class="description">
+                    Lorem ipsum dolor sit amet, consectetur elit.
+                    Praesent ullamcorper mi eget bibendum commodo.
+                    Suspendisse eu mauris feugiat, congue tortor eget, scelerisque
+                    velit. Duis commodo pharetra eros, in dapibus urna maximus
+                    neulputate. Lorem ipsum dolor sit amet, consectetur adipiscing.
+                    Lorem ipsum dolor sit amet, consectetur elit...
+                </p>
+                <div class="tools">
+                    <button class="service">More</button>
+                    <div class="admin-tools">
+                        <form action="#" style="display: inline-flex;">
+                            <button class="service">Delete</button>
+                        </form>
+                        <form action="#" style="display: inline-flex;">
+                            <button class="service">Edit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="item-panel pane">
+                <div class="item-info">
+                    <div class="item-info-wrapper">
+                        <h2><a href="#" class="title service">Recipe name</a></h2>
+                    </div>
+                    <p class="service">Complexity: 10</p>
+                </div>
+                <p class="description">
+                    Lorem ipsum dolor sit amet, consectetur elit.
+                    Praesent ullamcorper mi eget bibendum commodo.
+                    Suspendisse eu mauris feugiat, congue tortor eget, scelerisque
+                    velit. Duis commodo pharetra eros, in dapibus urna maximus
+                    neulputate. Lorem ipsum dolor sit amet, consectetur adipiscing.
+                    Lorem ipsum dolor sit amet, consectetur elit...
+                </p>
+                <div class="tools">
+                    <button class="service">More</button>
+                    <div class="admin-tools">
+                        <form action="#" style="display: inline-flex;">
+                            <button class="service">Delete</button>
+                        </form>
+                        <form action="#" style="display: inline-flex;">
+                            <button class="service">Edit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ui:include src="WEB-INF/templates/footer.xhtml" />
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputStylesheet library="css" name="main.css"  />
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <title>Document</title>
+</h:head>
+<body>
+<ui:include src="WEB-INF/templates/header.xhtml" />
+<div class="wrapper">
+    <div class="log-in-wrapper pane-wrapper">
+        <div class="log-in-pane pane">
+            <h:form>
+                <p class="service">Login</p>
+                <p:inputText value="#{userBean.user.login}" styleClass="service"/>
+                <p class="service">Password</p>
+                <p:password value="#{userBean.user.password}" styleClass="service"/>
+                <p:messages id="messages" styleClass="error service" showIcon="false"/>
+                <p:commandButton value="Log in" styleClass="service" action="#{loginBean.login}" ajax="false" />
+            </h:form>
+        </div>
+    </div>
+</div>
+<ui:include src="WEB-INF/templates/footer.xhtml" />
+</body>
+
+</html>
