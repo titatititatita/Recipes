@@ -9,8 +9,11 @@ import java.util.List;
 public interface Dao<T extends AbstractEntity> extends Serializable, Closeable {
 
     List<T> findAll();
+
     void saveOrUpdate(T entity);
+
     void removeById(Integer id);
+
     T findById(Integer id);
 
 }

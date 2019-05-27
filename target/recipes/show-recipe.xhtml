@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <h:outputStylesheet library="css" name="main.css"  />
+    <meta charset="UTF-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <title>Document</title>
+</h:head>
+<body>
+<ui:include src="WEB-INF/templates/header.xhtml" />
+<div class="wrapper">
+    <div class="pane-wrapper">
+        <ui:include src="WEB-INF/templates/left-menu.xhtml" />
+        <div class="content-panel">
+            <div class="pane">
+                <h2 class="title service">Recipe for <h:outputText value="#{recipeBean.recipe.dish.title}"/></h2>
+            </div>
+            <div class="item-panel pane">
+                <div class="item-info">
+                    <div class="item-title-wrapper">
+                        <h2 class="title service"><h:outputText value="#{recipeBean.recipe.title}"/></h2>
+                    </div>
+                    <p class="service">Complexity: #{recipeBean.recipe.complexity}</p>
+                </div>
+                <p class="description">
+                    <h:outputText value="#{recipeBean.recipe.description}" />
+                </p>
+                <c:if test="#{userBean.admin}">
+                    <div class="tools">
+                        <div class="admin-tools">
+                            <h:form>
+                                <p:commandButton styleClass="service" ajax="false" value="Delete" action="#{recipeController.remove}">
+                                    <f:param name="recipeId" value="#{recipeBean.recipeId}" />
+                                </p:commandButton>
+                            </h:form>
+                        </div>
+                    </div>
+                </c:if>
+                <br />
+                <div class="new-comment">
+                    <h:form>
+                        <p class="service">Share your opinion</p>
+                        <p:inputTextarea required="true" value="#{preparedCommentBean.comment.text}" styleClass="context-textarea" />
+                        <br/>
+                        <p:messages id="messages" styleClass="error service" showIcon="false"/>
+                        <p:commandButton styleClass="service" action="#{commentController.create}" value="Submit" ajax="false">
+                            <f:param name="recipeId" value="#{recipeBean.recipeId}" />
+                        </p:commandButton>
+                    </h:form>
+                </div>
+                <h:panelGroup layout="block" styleClass="comments" id="comments">
+                    <ui:repeat value="#{recipeBean.recipe.commentList}" var="comment">
+                        <div class="comment">
+                            <div class="comment-header">
+                                <span class="service"><h:outputText styleClass="service" value="#{comment.user.login}" /></span>
+                            </div>
+                            <p>
+                                <h:outputText value="#{comment.text}" />
+                            </p>
+                        </div>
+                    </ui:repeat>
+                </h:panelGroup>
+            </div>
+        </div>
+    </div>
+</div>
+<ui:include src="WEB-INF/templates/footer.xhtml" />
+</body>
+
+</html>

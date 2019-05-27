@@ -1,6 +1,9 @@
 package by.bsu.recipe.entity;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -18,6 +21,10 @@ public abstract class AbstractEntity implements Serializable {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "AbstractEntity{" +
@@ -31,10 +38,6 @@ public abstract class AbstractEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         AbstractEntity that = (AbstractEntity) o;
         return Objects.equals(id, that.id);
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     @Override

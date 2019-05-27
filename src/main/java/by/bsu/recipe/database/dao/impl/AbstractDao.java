@@ -3,10 +3,8 @@ package by.bsu.recipe.database.dao.impl;
 import by.bsu.recipe.database.dao.Dao;
 import by.bsu.recipe.entity.AbstractEntity;
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.AbstractEmptinessExpression;
 
 import java.util.List;
 
@@ -22,10 +20,15 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
         this.classType = classType;
     }
 
-    public void saveOrUpdate(T object){
-        transaction.begin();
-        session.saveOrUpdate(object);
-        transaction.commit();
+    public void saveOrUpdate(T object) {
+        try {
+            transaction.begin();
+            session.saveOrUpdate(object);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            throw e;
+        }
     }
 
     public T findById(Integer id) {
@@ -33,13 +36,18 @@ public abstract class AbstractDao<T extends AbstractEntity> implements Dao<T> {
     }
 
     public void removeById(Integer id) {
-        transaction.begin();
-        T object = findById(id);
-        session.delete(object);
-        transaction.commit();
+        try {
+            transaction.begin();
+            T object = findById(id);
+            session.delete(object);
+            transaction.commit();
+        } catch (RuntimeException e) {
+            transaction.rollback();
+            throw e;
+        }
     }
 
-    public List<T> findAll(){
+    public List<T> findAll() {
         Criteria criteria = session.createCriteria(classType);
         return (List<T>) criteria.list();
     }

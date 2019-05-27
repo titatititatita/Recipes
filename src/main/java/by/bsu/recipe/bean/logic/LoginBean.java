@@ -6,19 +6,18 @@ import by.bsu.recipe.database.dao.UserDao;
 import by.bsu.recipe.entity.User;
 import by.bsu.recipe.factory.DaoFactory;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.naming.directory.SearchResult;
 import java.io.Serializable;
 
 @ManagedBean
 @SessionScoped
 public class LoginBean implements Serializable {
+
+    private static final String INDEX_PAGE_REDIRECT = "/index.html/?faces-redirect=true";
+    private static final String LOGIN_PAGE_REDIRECT = "/login.xhtml/?faces-redirect=true";
 
     @ManagedProperty(value = "#{userBean}")
     private UserBean userBean;
@@ -36,14 +35,6 @@ public class LoginBean implements Serializable {
         this.errorBean = errorBean;
     }
 
-    public UserDao getUserDao() {
-        return userDao;
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
     public UserBean getUserBean() {
         return userBean;
     }
@@ -58,10 +49,16 @@ public class LoginBean implements Serializable {
         if (user == null) {
             userBean.setUser(new User());
             errorBean.addError("Invalid login or password", "User is not found");
-            return "/?faces-redirect=true";
+            return LOGIN_PAGE_REDIRECT;
         } else {
             userBean.setUser(user);
-            return "index/?faces-redirect=true";
+            userBean.setAuthorized(true);
+            return INDEX_PAGE_REDIRECT;
         }
+    }
+
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return INDEX_PAGE_REDIRECT;
     }
 }

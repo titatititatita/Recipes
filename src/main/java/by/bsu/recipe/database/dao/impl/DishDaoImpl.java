@@ -1,20 +1,27 @@
 package by.bsu.recipe.database.dao.impl;
 
 import by.bsu.recipe.database.dao.DishDao;
-import by.bsu.recipe.database.dao.RecipeDao;
-import by.bsu.recipe.database.dao.UserDao;
 import by.bsu.recipe.entity.Dish;
-import by.bsu.recipe.entity.Recipe;
-import by.bsu.recipe.entity.User;
-import by.bsu.recipe.factory.DaoFactory;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
-
-import java.util.List;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 public class DishDaoImpl extends AbstractDao<Dish> implements DishDao {
 
+    private Session session;
+    private Transaction transaction;
+
     public DishDaoImpl(Session session) {
         super(session, Dish.class);
+        this.session = session;
+        this.transaction = session.getTransaction();
     }
 
+    @Override
+    public Dish findByTitle(String title) {
+        Criteria titleCriteria = session.createCriteria(Dish.class);
+        titleCriteria.add(Restrictions.eq("title", title));
+        return (Dish) titleCriteria.uniqueResult();
+    }
 }

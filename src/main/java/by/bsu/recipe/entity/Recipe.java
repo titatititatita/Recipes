@@ -1,8 +1,10 @@
 package by.bsu.recipe.entity;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +15,7 @@ public class Recipe extends AbstractEntity {
     private String title;
 
     @Column(name = "description")
-    @Type(type="text")
+    @Type(type = "text")
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,6 +24,34 @@ public class Recipe extends AbstractEntity {
 
     @Column(name = "complexity", nullable = false)
     private int complexity;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dish_id")
+    private Dish dish;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    private List<Comment> commentList;
+
+    public Recipe() {
+    }
+
+
+    public Recipe(String title, String description, User user, int complexity, Dish dish, List<Comment> commentList) {
+        this.title = title;
+        this.description = description;
+        this.user = user;
+        this.complexity = complexity;
+        this.dish = dish;
+        this.commentList = commentList;
+    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
+    }
 
     public int getComplexity() {
         return complexity;
@@ -31,47 +61,32 @@ public class Recipe extends AbstractEntity {
         this.complexity = complexity;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dish_id")
-    private Dish dish;
-
-    public Recipe(){
-    }
-
-    public Recipe(String title, String description, User user, int complexity, Dish dish) {
-        this.title = title;
-        this.description = description;
-        this.user = user;
-        this.complexity = complexity;
-        this.dish = dish;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Dish getDish() {
-        return dish;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Dish getDish() {
+        return dish;
     }
 
     public void setDish(Dish dish) {

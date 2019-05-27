@@ -1,5 +1,7 @@
 package by.bsu.recipe.entity;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +13,8 @@ public class Dish extends AbstractEntity {
     @Column(name = "title", nullable = false, unique = true)
     private String title;
 
-    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "dish")
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     private List<Recipe> recipeList;
 
     public Dish() {
@@ -26,16 +29,16 @@ public class Dish extends AbstractEntity {
         return recipeList;
     }
 
+    public void setRecipeList(List<Recipe> recipeList) {
+        this.recipeList = recipeList;
+    }
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setRecipeList(List<Recipe> recipeList) {
-        this.recipeList = recipeList;
     }
 
     @Override
@@ -51,12 +54,11 @@ public class Dish extends AbstractEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Dish dish = (Dish) o;
-        return Objects.equals(title, dish.title) &&
-                Objects.equals(recipeList, dish.recipeList);
+        return Objects.equals(title, dish.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), title, recipeList);
+        return Objects.hash(super.hashCode(), title);
     }
 }

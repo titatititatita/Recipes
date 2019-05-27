@@ -17,7 +17,7 @@
         <ui:include src="WEB-INF/templates/left-menu.xhtml" />
         <div class="content-panel">
             <ui:repeat value="#{dishBean.allDishes}" var="dish">
-                <ui:include src="WEB-INF/templates/dish_preview.xhtml">
+                <ui:include src="WEB-INF/templates/dish-preview.xhtml">
                     <ui:param name="dish" value="#{dish}"/>
                 </ui:include>
             </ui:repeat>

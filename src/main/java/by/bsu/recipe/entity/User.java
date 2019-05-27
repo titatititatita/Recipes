@@ -1,5 +1,7 @@
 package by.bsu.recipe.entity;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -21,6 +23,11 @@ public class User extends AbstractEntity {
     public User() {
     }
 
+    public User(String login, String password, Role role) {
+        this.login = login;
+        this.password = password;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -29,25 +36,24 @@ public class User extends AbstractEntity {
         this.role = role;
     }
 
-    public User(String login, String password, Role role) {
-        this.login = login;
-        this.password = password;
-    }
-
     public String getLogin() {
         return login;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setLogin(String login) {
         this.login = login;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setRawPassword(String password) {
+        this.password = DigestUtils.sha256Hex(password);
     }
 
     @Override

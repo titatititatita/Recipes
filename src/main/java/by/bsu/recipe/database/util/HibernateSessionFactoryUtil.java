@@ -1,27 +1,25 @@
 package by.bsu.recipe.database.util;
 
+import by.bsu.recipe.entity.Comment;
 import by.bsu.recipe.entity.Dish;
 import by.bsu.recipe.entity.Recipe;
 import by.bsu.recipe.entity.User;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-
-import java.util.List;
 
 public class HibernateSessionFactoryUtil {
     private static volatile SessionFactory sessionFactory;
 
-    private HibernateSessionFactoryUtil() {}
+    private HibernateSessionFactoryUtil() {
+    }
 
     public static SessionFactory getSessionFactory() {
         SessionFactory localInstance = sessionFactory;
         if (localInstance == null) {
             synchronized (SessionFactory.class) {
                 localInstance = sessionFactory;
-                if(localInstance == null) {
+                if (localInstance == null) {
                     sessionFactory = createFactory();
                 }
             }
@@ -41,6 +39,7 @@ public class HibernateSessionFactoryUtil {
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Recipe.class);
         configuration.addAnnotatedClass(Dish.class);
+        configuration.addAnnotatedClass(Comment.class);
         return configuration;
     }
 }

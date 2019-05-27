@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+</h:head>
+<body>
+<ui:composition>
+    <div class="item-panel pane">
+        <div class="item-title-wrapper">
+            <h2>
+                <a href="#{request.contextPath}/show.xhtml?dishId=#{dish.id}" class="service title">#{dish.title}</a>
+            </h2>
+        </div>
+        <br/>
+        <h:form>
+            <p:commandButton value="Show recipes" styleClass="service" ajax="false"
+                             action="#{dishController.openDish}">
+                <f:param value="#{dish.id}" name="dishId" />
+            </p:commandButton>
+        </h:form>
+    </div>
+</ui:composition>
+</body>
+</html>

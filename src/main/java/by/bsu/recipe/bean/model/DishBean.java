@@ -6,17 +6,28 @@ import by.bsu.recipe.factory.DaoFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import java.util.List;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class DishBean {
 
     private DishDao dishDao = DaoFactory.createDishDao();
     private List<Dish> allDishes;
     private Dish dish;
+
+    @ManagedProperty(value = "#{param.dishId}")
+    private Integer dishId;
+
+    public Integer getDishId() {
+        return dishId;
+    }
+
+    public void setDishId(Integer dishId) {
+        this.dishId = dishId;
+    }
 
     public Dish getDish() {
         return dish;
@@ -35,7 +46,10 @@ public class DishBean {
     }
 
     @PostConstruct
-    private void initDishes() {
+    private void init() {
+        if (dishId != null) {
+            dish = dishDao.findById(dishId);
+        }
         allDishes = dishDao.findAll();
     }
 }
